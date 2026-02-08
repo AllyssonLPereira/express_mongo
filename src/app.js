@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
     res.status(200).send("Curso de Node.js");
 });
 
-app.get("/books", async (req, res) => {
+app.get("/Books", async (req, res) => {
     const booksList = await book.find({});
     res.status(200).json(booksList);
 });
