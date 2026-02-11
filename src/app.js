@@ -17,26 +17,4 @@ connection.once("open", () => {
 const app = express();
 routes(app);
 
-app.get("/books/:id", (req, res) => {
-    const index = buscaLivros(req.params.id);
-    res.status(200).json(livros[index]);
-});
-
-app.post("/books", (req, res) => {
-    livros.push(req.body);
-    
-});
-
-app.put("/books/:id", (req, res) => {
-    const index = buscaLivros(req.params.id);
-    livros[index].titulo = req.body.titulo;
-    res.status(200).json(livros);
-});
-
-app.delete("/books/:id", (req, res) => {
-    const index = buscaLivros(req.params.id);
-    livros.splice(index, 1);
-    res.status(200).send("livro deletado")
-});
-
 export default app;

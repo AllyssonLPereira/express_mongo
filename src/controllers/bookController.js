@@ -14,8 +14,8 @@ class BookController {
     static async ListBookByID (req, res) {
         try {
             const id = req.params.id;
-            const book = await book.findById(id);
-            res.status(200).json(book);
+            const bookFound = await book.findById(id);
+            res.status(200).json(bookFound);
 
         } catch (error) {
             res.status(500).json({ message: `${error.message} - Request failed.`})
@@ -39,7 +39,18 @@ class BookController {
             res.status(200).json(book);
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Request failed.`}) 
+            res.status(500).json({ message: `${error.message} - Update failed.`}) 
+        }
+    };
+
+    static async DeleteBook (req, res) {
+        try {
+            const id = req.params.id;
+            await book.findByIdAndDelete(id);
+            res.status(200).json({message: "Deleted book."});
+
+        } catch (error) {
+            res.status(500).json({ message: `${error.message} - Deletion failed.`}) 
         }
     };
 };
