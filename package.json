@@ -1,6 +1,7 @@
 {
-  "name": "express_mongo",
+  "name": "alura-node",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -8,14 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "allysson",
+  "author": "",
   "license": "ISC",
-  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
   "dependencies": {
-    "dotenv": "^17.2.4",
-    "express": "^5.1.0",
-    "mongodb": "^7.1.0",
-    "mongoose": "^9.1.5",
-    "nodemon": "^3.1.10"
+    "dotenv": "^17.3.1",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.6"
   }
 }
