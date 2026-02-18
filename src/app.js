@@ -10,7 +10,7 @@ connection.on("error", (error) => {
 });
 
 connection.once("open", () => {
-    console.log("Connection to the server successful.")
+    console.log("Connection to the server successful...")
 });
 
 // Express connection
