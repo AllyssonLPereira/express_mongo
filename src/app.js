@@ -1,6 +1,7 @@
 import express from "express";
 import connectInDataBase from "./config/dbConnect.js";
 import routes from "./routes/index.js";
+import errors from "./middlewares/errors.js";
 
 // Database connection
 const connection = await connectInDataBase();
@@ -16,5 +17,7 @@ connection.once("open", () => {
 // Express connection
 const app = express();
 routes(app);
+
+app.use(errors)
 
 export default app;

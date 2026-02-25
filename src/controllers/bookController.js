@@ -2,28 +2,28 @@ import book from "../models/Books.js";
 import { author } from "../models/Author.js";
 
 class BookController {
-    static async ListBooks (req, res) {
+    static async ListBooks (req, res, next) {
         try {
             const booksList = await book.find({});
             res.status(200).json(booksList);
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Request failed.`})
+            next(error);
         }
     };
 
-    static async ListBookByID (req, res) {
+    static async ListBookByID (req, res, next) {
         try {
             const id = req.params.id;
             const bookFound = await book.findById(id);
             res.status(200).json(bookFound);
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Request failed.`})
+            next(error);
         }
     };
 
-    static async RegisterBook (req, res) {
+    static async RegisterBook (req, res, next) {
         const newBook = req.body;
         
         try {
@@ -33,40 +33,40 @@ class BookController {
             res.status(201).json({ message: "Book successfully registered", book: newBook });
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Failed to register book` });
+            next(error);
         }
     };
 
-    static async UpdateBook (req, res) {
+    static async UpdateBook (req, res, next) {
         try {
             const id = req.params.id;
             await book.findByIdAndUpdate(id, req.body);
             res.status(200).json(book);
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Update failed.`}) 
+            next(error); 
         }
     };
 
-    static async DeleteBook (req, res) {
+    static async DeleteBook (req, res, next) {
         try {
             const id = req.params.id;
             await book.findByIdAndDelete(id);
             res.status(200).json({message: "Deleted book."});
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Deletion failed.`}) 
+            next(error);
         }
     };
 
-    static async ListBooksByPublisher (req, res) {
+    static async ListBooksByPublisher (req, res, next) {
         const publisher = req.query.publisher
 
         try {
             const bookByPublisher = await book.find({ publisher: publisher });
             res.status(200).json(bookByPublisher)
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Request failed.`})  
+            next(error);
         }
     }
 };

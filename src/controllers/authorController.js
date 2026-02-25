@@ -1,18 +1,17 @@
-import mongoose from "mongoose";
 import { author } from "../models/Author.js";
 
 class AuthorController {
-    static async ListAuthors (req, res) {
+    static async ListAuthors (req, res, next) {
         try {
             const authorsList = await author.find({});
             res.status(200).json(authorsList);
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Request failed.`})
+            next(error);
         }
     };
 
-    static async ListAuthorByID (req, res) {
+    static async ListAuthorByID (req, res, next) {
         try {
             const id = req.params.id;
             const authorFound = await author.findById(id);
@@ -24,43 +23,39 @@ class AuthorController {
             }
 
         } catch (error) {
-            if (error instanceof mongoose.Error.CastError) {
-                res.status(400).send({message: "One or more of the provided data is incorrect."})
-            } else {
-                res.status(500).json({ message: "Internal server error." });
-            };
+            next(error);
         };
     };
 
-    static async RegisterAuthor (req, res) {
+    static async RegisterAuthor (req, res, next) {
         try {
             const newAuthor = await author.create(req.body);
             res.status(201).json({ message: "Author successfully registered", author: newAuthor });
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Failed to register author` });
+            next(error);
         }
     };
 
-    static async UpdateAuthor (req, res) {
+    static async UpdateAuthor (req, res, next) {
         try {
             const id = req.params.id;
             await author.findByIdAndUpdate(id, req.body);
             res.status(200).json(author);
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Update failed.`}) 
+            next(error); 
         }
     };
 
-    static async DeleteAuthor (req, res) {
+    static async DeleteAuthor (req, res, next) {
         try {
             const id = req.params.id;
             await author.findByIdAndDelete(id);
             res.status(200).json({message: "Deleted author."});
 
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Deletion failed.`}) 
+            next(error); 
         }
     };
 };
